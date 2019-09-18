@@ -13,3 +13,13 @@
 	
 # reset.css
 
+# import styled from "styled-components"
+	使用：
+		export const Header = styled.div`width:100px;`
+		import {Header} from "./style.js";
+		render(){<Header></Header>}
+	tips：
+		background:url("../../statics/logo.png");-->不推荐使用
+		import logoPic from "../../statics/logo.png";   background:url(${logoPic})-->推荐使用
+		
+		
