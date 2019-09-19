@@ -21,5 +21,10 @@
 	tips：
 		background:url("../../statics/logo.png");-->不推荐使用
 		import logoPic from "../../statics/logo.png";   background:url(${logoPic})-->推荐使用
+
+#react 使用iconfont图标
+	iconfont.cn下载图标，把文件放在statics下面
+	引入iconfont.css引入项目中
+	<i className = "iconfont iconxxx"></i>
 		
 		
