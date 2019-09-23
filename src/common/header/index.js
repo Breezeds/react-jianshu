@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import {CSSTransition} from "react-transition-group";
 import "../../statics/iconfont/iconfont.css";
+import { connect } from "react-redux";
+ 
 
 import {
 	HeaderWrapper,
@@ -25,8 +28,18 @@ class Header extends Component {
 						<span className="iconfont iconAa"></span>
 					</NavItem>
 					<SearchWrapper>
-						<NavSearch></NavSearch>
-						<span className="iconfont icon41"></span>
+					<CSSTransition
+						in={this.props.focused}
+						timeout={200}
+						classNames="slider"
+					>
+						<NavSearch
+							className={this.props.focused ? "focused":""}
+							onFocus={this.props.handleInputFocus}
+							onBlur = {this.props.handleInputBlur}
+						></NavSearch>
+					</CSSTransition>
+						<span className={this.props.focused ? "focused iconfont icon41":"iconfont icon41"}></span>
 					</SearchWrapper>
 				</Nav>
 				<Addition>
@@ -40,4 +53,29 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+	return {
+		focused: state.focused
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		handleInputFocus() {
+			console.log("123")
+			const action = {
+				type: "search_focus"
+			}
+			dispatch(action);
+		},
+		handleInputBlur() {
+			console.log("456")
+			const action = {
+				type: "search_blur"
+			}
+			dispatch(action);
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

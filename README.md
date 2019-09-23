@@ -26,5 +26,24 @@
 	iconfont.cn下载图标，把文件放在statics下面
 	引入iconfont.css引入项目中
 	<i className = "iconfont iconxxx"></i>
+	
+#cnpm install --save react-transition-group
+react动画库  <CSSTransition in = {this.state.focused} timeout = {200} classNames="slider"></CSSTransition>
+
+#使用react-redux和redux插件
+cnpm install react-redux --save
+cnpm install redux --save
+/store -- 
+			index.js -- import {createStore} from "redux"; createStore(reducer)
+			reducer.js -- 纯函数 (state,action) => {return state}
+app.js --
+	import {Provider} from "react-redux";
+	import store from "./store"
+	<Provider store={store}></Provider>
+header.js
+	import {connect} from "react-redux";
+	mapStateToProps  mapDispatchToProps
+	export default (mapStateToProps, mapDispatchToProps)(Header)
+
 		
 		
