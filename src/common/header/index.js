@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {CSSTransition} from "react-transition-group";
 import "../../statics/iconfont/iconfont.css";
 import { connect } from "react-redux";
+import * as actionCreators from "./store/actionCreators";
  
 
 import {
@@ -55,25 +56,18 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		focused: state.focused
+		// focused: state.header.focused
+		focused: state.header.get("focused")
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		handleInputFocus() {
-			console.log("123")
-			const action = {
-				type: "search_focus"
-			}
-			dispatch(action);
+			dispatch(actionCreators.searchFocus());
 		},
 		handleInputBlur() {
-			console.log("456")
-			const action = {
-				type: "search_blur"
-			}
-			dispatch(action);
+			dispatch(actionCreators.searchBlue());
 		}
 	}
 }

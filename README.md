@@ -45,5 +45,27 @@ header.js
 	mapStateToProps  mapDispatchToProps
 	export default (mapStateToProps, mapDispatchToProps)(Header)
 
+#combineReducer	<!-- 拆分数据管理 -->
+	import {combineReducers} from "redux";
+	import headerReducer from "../common/header/store/reducer";
+	export default combineReducers({
+		header: headerReducer
+	})
+	mapStateToProps=(state)=>{return {focused:state.header.focused}}
+	
+# import {reducer as headerReducer} from "../store/reducer";//引入reducer ，别名叫做headerRducer
+
+#combineReducer 拆分管理数据
+/header/
+	index 出口文件
+	
+#使用immutable来管理store里面的数据
+	/reducer/
+		import {fromJS} from "immutable";
+		export default(state, action) => {
+			if(action.type === "xxx") {
+				return state.set("focused", true)
+			}
+		}
 		
 		
