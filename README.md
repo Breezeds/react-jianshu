@@ -68,4 +68,35 @@ header.js
 			}
 		}
 		
-		
+#redux-immutable
+	cnpm install --save redux-immutable
+	import {combineReducers} from "redux-immutable"
+	export default combineReducers({
+		header: headerReducer
+	})
+	使用：const mapStateToProps=(state){
+		focused: state.getIn(["header", "focused"])
+		//focused: state.get("header").get("focused")
+	}
+
+#cnpm install --save redux-thunk
+
+#axios
+	新建接口返回值json文件  /public/api/headerList.json
+	
+	引入：import {createStore, applyMiddleware} frm "redux";
+		 import thunk from "redux-thunk";
+		 const store = createStore(reducer, applyMiddleware(thunk));
+	
+	使用：const getList = () => {
+		return (dispatch) => {
+			axios.get(url).then((res) => {
+				const data = res.data;
+				dispatch(getSearchList(data.data));
+			}).catch((err) => {
+				
+			})
+		}
+	}
+	
+	
