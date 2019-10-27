@@ -100,3 +100,49 @@ header.js
 	}
 	
 	
+iconfont字体图标的使用：
+	display:block; 
+	transform: rotate(45deg);	//块级元素才能旋转
+ref的使用
+	<i ref={(icon) => { this.spinIcon = icon }}></i>
+	
+避免无意义的请求发送
+	(list.length === 0) && dispatch(actionCreator.getsearch());
+	
+路由 react-router-dom
+cnpm install react-router-dom --save
+/app.js
+	import {BrowserRouter, Route} from "react-router-dom";
+	<BrowserRouter>
+		<Route path="/" exact render={() => <div>home</div>}></Route>
+		<Route path="/details" exact render={() => <div>details</div>}></Route>
+		或者
+		<Route path="/" exact component={Home}><Route>
+		<Route path="/" exact component={Detail}></Route>
+	</BrowserRouter>
+	
+组件拆分topic - List - recommend - writer
+
+
+import { connect } from "react-redux";
+const mapStateToProps = (state) => ({
+	list: state.get("home").get("topicList")
+})
+immutable 数据类型，取数据的时候要用get方法，不能用list.xxx这种写法
+等价写法：
+	list.map(() => {
+		return (
+			<div></div>
+		)
+	})
+	或者
+	list.map(() => (
+		<div></div>
+	))
+
+export { reducer }; --- import { reducer as xxx } from "xxx";
+export default reducer; --- import reducer from "xxx";
+
+immutable类型数据方法：list.get("id");   return list.set("topicList");
+		list: state.getIn(["home", "topicList"]) === list: state.get("home").get("topicList")
+		list: state.set("topicList", fromJS(action.topicList)) === list: state.merge({"topicList":fromJS(action.topicList}))

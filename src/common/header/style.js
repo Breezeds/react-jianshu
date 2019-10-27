@@ -102,7 +102,7 @@ export const SearchWrapper = styled.div`
 	.slider-exit-active{
 		width:160px;
 	}
-	.iconfont{
+	.zoom{
 		position:absolute;
 		right:5px;
 		bottom:5px;
@@ -111,6 +111,7 @@ export const SearchWrapper = styled.div`
 		background:#ccc;
 		border-radius:15px;
 		text-align:center;
+		cursor:pointer;
 		&.focused{
 			background:#777;
 			color:#fff;
@@ -133,11 +134,21 @@ export const SearchInfo = styled.div`
 export const SearchInfoTitle = styled.div`
 	font-size:14px;
     color: #969696;
+	.spin {
+		display:block;
+		float: left;
+		font-size:12px;
+		margin-right:3px;
+		transition: all .2s ease-in;
+		transform: rotate(20deg);
+		transform-origin: center center;
+	}
 `;
 
 export const SearchInfoSwitch = styled.span`
 	float:right;
 	font-size:13px;
+	
 `;
 
 export const SearchInfoList = styled.div`

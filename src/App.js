@@ -3,7 +3,12 @@ import { GlobalStyle } from "./style.js";
 import "./reset.css";
 import Header from "./common/header";
 import {Provider} from "react-redux";
-import {store} from "./store"
+import {store} from "./store";
+import { BrowserRouter, Route } from "react-router-dom";
+
+import Home from "./pages/home/index";
+import Detail from "./pages/detail/index";
+
 
 function App() {
   return (
@@ -11,6 +16,10 @@ function App() {
 			<GlobalStyle />
 			<Provider store={store}>
 				<Header />
+				<BrowserRouter>
+					<Route path="/" exact component={Home}></Route>
+					<Route path="/detail" exact component={Detail}></Route>
+				</BrowserRouter>
 			</Provider>
     </div>
   );
