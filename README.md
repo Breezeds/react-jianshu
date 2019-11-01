@@ -146,3 +146,47 @@ export default reducer; --- import reducer from "xxx";
 immutable类型数据方法：list.get("id");   return list.set("topicList");
 		list: state.getIn(["home", "topicList"]) === list: state.get("home").get("topicList")
 		list: state.set("topicList", fromJS(action.topicList)) === list: state.merge({"topicList":fromJS(action.topicList}))
+		
+异步代码拆分优化：
+	actionCreator.js   constants.js  index.js
+	
+阅读更多:
+	state.set("articleList", state.get("articleList").concat(action.list))
+	
+返回顶部：
+	1、组件挂载结束后监听scroll事件 window.addEventListener("scroll", this.props.scrollPage);
+	2、document.documentElement.scrollTop>100  dispatch派发状态true 否则派发false状态
+	3、action--> reducer
+	4、reducer返回一个值，state重新赋值，component渲染
+	5、组件销毁的时候，window.removeEventListener("scroll", this.props.scrollPage)
+	
+优化： 当reducer处理逻辑越来越多的时候，需要把每一项都抽出来，写成一个函数
+	switch (action.type) {
+		case test:
+			return testFunc(state, action);
+		case test2:
+			return test2Func(state, action);
+		default:
+			return state;
+	}
+	
+优化：PureComponent 与 Component
+
+单页面应用：network下doc跳转页面只请求一次html文件，所有的文件都使用一个html
+	与多页面相比，页面之间的跳转没有白屏间隔了
+
+路由跳转： import {Link} from "react-router-dom";
+<Link to="/detail"></Link>
+
+详情页布局：
+	dangerouslySetInnerHTML={{__html: this.props.content}}  解析html字符串
+	import {connect} from "react-redux";
+	1、store文件夹：index.js(出口文件) ，reducer(处理逻辑) ，actionCreators(action创建器) ，constants
+	2、index.js  connect dangerouslySetInnerHTML={{__html： content}} mapStateToProps
+	
+reducer.js
+	defaultState = fromJS({
+		list: []
+	})
+
+mapDispatchToProps  -> connect -> actionCreators(axios.get dispatch(action)) -> reducer(return newstate) -> state -> component

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 import "../../statics/iconfont/iconfont.css";
 import { connect } from "react-redux";
@@ -69,7 +70,9 @@ class Header extends Component {
 		const { focused, list, handleInputFocus } = this.props;
 		return(
 			<HeaderWrapper>
-				<Logo href="/"></Logo>
+				<Link to="/">
+					<Logo />
+				</Link>
 				<Nav>
 					<NavItem className="left active">首页</NavItem>
 					<NavItem className="left">下载APP</NavItem>

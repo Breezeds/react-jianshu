@@ -6,9 +6,7 @@ export const HeaderWrapper = styled.div`
 	border-bottom: 1px solid #e2e2e2;
 `
 
-export const Logo = styled.a.attrs({
-	href: "/"
-})`
+export const Logo = styled.div`
 	display:block;
 	position:absolute;
 	top:0;

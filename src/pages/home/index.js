@@ -5,6 +5,8 @@ import Topic from "./components/Topic";
 import Writer from "./components/Writer";
 import axios from "axios";
 import { connect } from "react-redux";
+import { actionCreators } from './store';
+import {BackTop} from './style';
 
 import {
 	HomeWrap,
@@ -13,6 +15,9 @@ import {
 } from "./style";
 
 class Home extends Component {
+	handleScrollTop() {
+		window.scrollTo(0, 0);
+	}
 	render() {
 		return (
 		<Fragment>
@@ -27,28 +32,42 @@ class Home extends Component {
 					<Writer />
 				</HomeRight>
 			</HomeWrap>
+			{
+				this.props.scrollShowFlag ? <BackTop onClick={this.handleScrollTop}>顶部</BackTop> : null
+			}
 		</Fragment>
 		)
 	}
 	
 	componentDidMount() {
-		axios.get("/api/home.json").then((res) => {
-			const result = res.data.data;
-			const action = {
-				type: "home_change",
-				topicList: result.topicList,
-				articleList: result.articleList,
-				recommendList: result.recommendList
-			}
-			this.props.homeChange(action);
-		})
+		this.props.homeChange();
+		this.bindEvents();
+	}
+	
+	bindEvents = () => {
+		window.addEventListener("scroll", this.props.scrollPage);
+	}
+	
+	componentWillUnmount() {
+		window.removeEventListener("scroll", this.props.scrollPage);
 	}
 }
 
+const mapStateToProps = (state) => ({
+	scrollShowFlag: state.getIn(["home", "scrollShowFlag"])
+})
+
 const mapDispatchToProps = (dispatch) => ({
-	homeChange(action) {
-		dispatch(action);
+	homeChange() {
+		dispatch(actionCreators.homeChange());
+	},
+	scrollPage() {
+		if(document.documentElement.scrollTop > 100) {
+			dispatch(actionCreators.scrollPageAction(true));
+		}else {
+			dispatch(actionCreators.scrollPageAction(false));
+		}
 	}
 })
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
