@@ -7,11 +7,14 @@ import { actionCreators } from "../store";
 class List extends Component {
 	render() {
 		const { list, loadMore, page } = this.props;
+		
+		// <Link key={index} to={'/detail/' + item.get('id')}>
+		// <Link key={index} to={'/detail?id=' + item.get('id')}>
 		return (
 			<Fragment>
 				{
 					list.map((item, index) => ( 
-						<Link key={index} to="/detail">
+						<Link key={index} to={'/detail/'+item.get('id')}>
 							<ListItem key={index}>
 								<img className="pic" src={item.get("imgUrl")} alt="" />
 								<ListInfo>

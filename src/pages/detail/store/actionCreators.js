@@ -7,9 +7,9 @@ const emitDetailsData = (result) => ({ //返回一个函数
 	content: result.content
 })
 
-export const getDetailsApi = () => {
+export const getDetailsApi = (id) => {
 	return (dispatch) => {
-		axios.get("api/details.json").then((res) => {
+		axios.get("../api/details.json?id="+id).then((res) => {
 			const result = res.data.data[0];
 			console.log(result);
 			// console.log(Object.prototype.toString.call(result));

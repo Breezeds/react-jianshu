@@ -4,6 +4,7 @@ import {CSSTransition} from "react-transition-group";
 import "../../statics/iconfont/iconfont.css";
 import { connect } from "react-redux";
 import * as actionCreators from "./store/actionCreators";
+import {actionCreators as logoutActionCreators} from "../../pages/login/store";
  
 
 import {
@@ -67,7 +68,7 @@ class Header extends Component {
 	}
 	
 	render() {
-		const { focused, list, handleInputFocus } = this.props;
+		const { focused, list, handleInputFocus, login, logout } = this.props;
 		return(
 			<HeaderWrapper>
 				<Link to="/">
@@ -76,7 +77,10 @@ class Header extends Component {
 				<Nav>
 					<NavItem className="left active">首页</NavItem>
 					<NavItem className="left">下载APP</NavItem>
-					<NavItem className="right">登录</NavItem>
+					{
+						login ? <NavItem className="right" onClick={this.props.logout}>退出</NavItem> : 
+						<Link to={"/login"}><NavItem className="right">登录</NavItem></Link>
+					}
 					<NavItem className="right">
 						<span className="iconfont iconAa"></span>
 					</NavItem>
@@ -115,7 +119,8 @@ const mapStateToProps = (state) => {
 		list: state.getIn(["header", "list"]),
 		page: state.getIn(["header", "page"]),
 		mouseIn: state.getIn(["header", "mouseIn"]),
-		totalPage: state.getIn(["header", "totalPage"])
+		totalPage: state.getIn(["header", "totalPage"]),
+		login: state.getIn(["login", "login"])
 	}
 }
 
@@ -148,6 +153,9 @@ const mapDispatchToProps = (dispatch) => {
 			}else {
 				dispatch(actionCreators.clickSwitch(1));
 			}
+		},
+		logout() {
+			dispatch(logoutActionCreators.logout());
 		}
 	}
 }

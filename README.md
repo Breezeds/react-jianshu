@@ -100,16 +100,16 @@ header.js
 	}
 	
 	
-iconfont字体图标的使用：
+#iconfont字体图标的使用：
 	display:block; 
 	transform: rotate(45deg);	//块级元素才能旋转
-ref的使用
+#ref的使用
 	<i ref={(icon) => { this.spinIcon = icon }}></i>
 	
-避免无意义的请求发送
+#避免无意义的请求发送
 	(list.length === 0) && dispatch(actionCreator.getsearch());
 	
-路由 react-router-dom
+#路由 react-router-dom
 cnpm install react-router-dom --save
 /app.js
 	import {BrowserRouter, Route} from "react-router-dom";
@@ -190,3 +190,47 @@ reducer.js
 	})
 
 mapDispatchToProps  -> connect -> actionCreators(axios.get dispatch(action)) -> reducer(return newstate) -> state -> component
+
+页面路由参数传递
+	1、	通过/:id传递
+		import {Link} from "react-router-dom";
+		<link to={'/detail/' + item.get('id')}></Link>
+		/app.js   <route path="/detail/:id" exact component={Detail}></route>
+		获取参数： /detail/index.js   this.props.match.params.id    1
+	2、<Link to={'/detail/' + item.get('id')}><Link>
+		/app.js  <route path="/detail" exact component={Detail}></route>
+		获取参数： /detial/index.js    this.props.location.search   ?id=1
+		
+登录页：
+	返回主页
+	定义一个变量loginStatus 登录成功true，退出false，判断这个值显示页面
+	ref获取input的value
+	import {Redirect} from "react-router-dom";
+	<Redirect to="/" />
+	
+异步组件以及withRouter:(按需加载)
+	访问首页的时候加载了bundle.js，进入详情页面的时候加载了1.chunk.js,实现了按需加载的功能
+
+	cnpm install react-loadable --save
+	
+	/detail/loadable.js/
+	import Loadable from "react-loadable";
+	const LoadableComponent = Loadable({
+		loader: () => import("./index.js"),
+		loading() {
+			return <div>加载中</div>
+		}
+	})
+	export default class App extends React.Component{
+		render () {
+			return <LoadableComponent />
+		}
+	}
+	
+	/detail/index.js/
+	import {withRouter} from "react-router-dom";
+	export default connect(null, null)(withRouter(Detail));
+	
+	使用withRouter绑定的组件可以顺利访问this.props
+	
+	
